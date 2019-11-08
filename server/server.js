@@ -7,5 +7,6 @@ app.use(dostroy.countRequests)
 app.listen(3000)
 
 app.get('/', function (req, res) {
-  res.send('Number of requests so far: ' + dostroy.getRequests())
+  console.log('Number of requests: ' + dostroy.getRequests())
+  res.send('Hello from example server!')
 })
