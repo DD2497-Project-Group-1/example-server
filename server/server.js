@@ -15,3 +15,12 @@ app.get('/', function (req, res) {
   slow && sleep.msleep(500)
   res.send('Hello from example server! \n')
 })
+
+app.get('/error', function (req, res) {
+  const param = req.query.param
+  if (param < 0) {
+    throw new Error('Your number is too low!')
+  } else {
+    res.send('Your number is: ' + param)
+  }
+})
