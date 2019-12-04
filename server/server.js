@@ -1,22 +1,20 @@
 const express = require('express')
 const dostroy = require('dostroy')
-const sleep = require('sleep')
-
 const app = express()
 
-const slow = true
+const SIMULATE_SLOW_SERVER = true
 
-config = {
-  rateLimiting: true,
-  logging: false,
-  errorHandling: true,
+const config = {
+  slowloris: false,
+  rateLimiting: false,
+  rudy: true
 }
-
-app.listen(3000)
+const server = app.listen(3000)
+if (SIMULATE_SLOW_SERVER) server.maxConnections = 125
+app.use(dostroy(server, config))
 
 app.get('/', function (req, res) {
-  slow && sleep.msleep(500)
-  res.send('Hello from example server! \n')
+  res.sendFile(__dirname +'/index.html')
 })
 
 app.get('/error', function (req, res) {
@@ -28,4 +26,6 @@ app.get('/error', function (req, res) {
   }
 })
 
-app.use(dostroy(config))
+app.post('/postForm', (req, res) => {
+  res.sendFile(__dirname +'/posted.html')
+})
