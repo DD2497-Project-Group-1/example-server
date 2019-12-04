@@ -6,12 +6,23 @@ const SIMULATE_SLOW_SERVER = true
 
 const config = {
   slowloris: false,
-  rateLimiting: false,
-  rudy: true
+  rudy: true,
+  rateLimiting: true,
+  dynamicRateLimiting: true,
+  errorHandling: true,
+  userActiveTimeout: 10000,
+  requestLimit: 10,
+  requestInterval: 10000,
+  logging: true,
+  headerTimeout: 1000,
+  rtimeout: 1000
 }
+
 const server = app.listen(3000)
 if (SIMULATE_SLOW_SERVER) server.maxConnections = 125
-app.use(dostroy(server, config))
+const dostroyConfig = dostroy.init(server, config)
+app.use(dostroy.protect(dostroyConfig))
+
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname +'/index.html')
