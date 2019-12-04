@@ -42,3 +42,5 @@ app.get('/error', function (req, res) {
 app.post('/postForm', (req, res) => {
   res.sendFile(__dirname +'/posted.html')
 })
+
+app.use(dostroy.errorHandler)
