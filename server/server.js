@@ -19,10 +19,12 @@ const config = {
 }
 
 const server = app.listen(3000)
-if (SIMULATE_SLOW_SERVER) server.maxConnections = 125
-const dostroyConfig = dostroy.init(server, config)
-app.use(dostroy.protect(dostroyConfig))
 
+if (SIMULATE_SLOW_SERVER) server.maxConnections = 125
+
+const dostroyConfig = dostroy.init(server, config)
+
+app.use(dostroy.protect(dostroyConfig))
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname +'/index.html')
