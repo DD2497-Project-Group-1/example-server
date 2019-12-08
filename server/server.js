@@ -1,32 +1,34 @@
 const express = require('express')
-const dostroy = require('dostroy')
+const dostroy = require('../../dostroy/index.js')
+const sleep = require('sleep')
 const app = express()
 
 const SIMULATE_SLOW_SERVER = true
 
 const config = {
   slowloris: false,
-  rudy: true,
-  rateLimiting: true,
-  dynamicRateLimiting: true,
-  errorHandling: true,
+  rudy: false,
+  rateLimiting: false,
+  dynamicRateLimiting: false,
+  errorHandling: false,
   userActiveTimeout: 10000,
   requestLimit: 10,
   requestInterval: 10000,
-  logging: true,
+  logging: false,
   headerTimeout: 1000,
   rtimeout: 1000
 }
 
 const server = app.listen(3000)
 
-if (SIMULATE_SLOW_SERVER) server.maxConnections = 125
+if (SIMULATE_SLOW_SERVER) server.maxConnections = 50
 
 const dostroyConfig = dostroy.init(server, config)
 
 app.use(dostroy.protect(dostroyConfig))
 
 app.get('/', function (req, res) {
+  sleep.msleep(1000)
   res.sendFile(__dirname +'/index.html')
 })
 
