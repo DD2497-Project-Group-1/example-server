@@ -27,12 +27,12 @@ const dostroyConfig = dostroy.init(server, config)
 
 app.use(dostroy.protect(dostroyConfig))
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   sleep.msleep(1000)
   res.sendFile(__dirname +'/index.html')
 })
 
-app.get('/error', function (req, res) {
+app.get('/error', (req, res) => {
   const param = req.query.param
   if (param < 0) {
     throw new Error('Your number is too low!')
