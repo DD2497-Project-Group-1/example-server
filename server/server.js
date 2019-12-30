@@ -1,5 +1,5 @@
 const express = require('express')
-const dostroy = require('../../dostroy/index.js')
+const dostroy = require('dostroy')
 const sleep = require('sleep')
 const app = express()
 
